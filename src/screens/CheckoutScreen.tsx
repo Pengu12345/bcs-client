@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Text, Button, SafeAreaView, View } from "react-native";
 import {styles} from "../style/Stylesheet";
 import {Article} from "../components/Article";
+import {API} from "../API";
 
 export default function CheckoutScreen() {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -14,7 +15,7 @@ export default function CheckoutScreen() {
     const itemsId = [1];
 
     const fetchPaymentSheetParams = async () => {
-        const response = await fetch(`http://172.16.20.182:8000/payments/`, {
+        const response = await fetch(`${API.getAddress()}/payments/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ export default function CheckoutScreen() {
             Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
             const paymentIntent = `pi_${paymentIntentId.split("_")[1]}`;
-            const response = await fetch(`http://172.16.20.182:8000/payments/check/${paymentIntent}`, {
+            const response = await fetch(`${API.getAddress()}/payments/check/${paymentIntent}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

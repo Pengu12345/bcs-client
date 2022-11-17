@@ -8,23 +8,30 @@ const stylesheet = StyleSheet.create({
     marginTop: 20
   },
 
+  title: {
+    fontSize:23,
+    fontWeight:"bold"
+  },
+
+  articleListContainer: {
+    borderStyle:"solid",
+    borderColor:"#ff0000",
+    borderWidth:1,
+
+  },
+
   articleContainer: {
     borderStyle:"solid",
     borderColor:"#000",
-    borderWidth:1
+    borderWidth:1,
+
+    marginTop:5,
+    marginBottom:5
   },
 
-  articleName: {
-
+  articleText: {
+    fontSize: 18
   },
-
-  articlePrice: {
-
-  },
-
-  articleButton: {
-
-  }
 
 });
 

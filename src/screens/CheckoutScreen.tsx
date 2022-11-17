@@ -1,13 +1,14 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import React, { useEffect, useState } from "react";
-import { Alert, Text, Button, SafeAreaView, View } from "react-native";
+import {Alert, Text, Button, SafeAreaView} from "react-native";
+
 import {styles} from "../style/Stylesheet";
-import {Article} from "../components/Article";
 import {API} from "../API";
 
 export default function CheckoutScreen() {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const [loading, setLoading] = useState(false);
+
     const [paymentIntentId, setPaymentIntentId] = useState<string>("");
 
     const amount = 1099;
@@ -85,9 +86,6 @@ export default function CheckoutScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <Text>Payment</Text>
-
-            <Article id={1}/>
-
             <Button
                 disabled={!loading}
                 title="Checkout"

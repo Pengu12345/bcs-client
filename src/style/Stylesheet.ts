@@ -1,11 +1,13 @@
 import {StyleSheet} from "react-native";
 
 const stylesheet = StyleSheet.create({
+
   container: {
     flex: 4,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     padding:10,
-    marginTop: 20
+    margin:5,
+    marginTop: 20,
   },
 
   title: {
@@ -14,23 +16,51 @@ const stylesheet = StyleSheet.create({
   },
 
   articleListContainer: {
-    borderStyle:"solid",
-    borderColor:"#ff0000",
-    borderWidth:1,
+    borderTopStyle:"solid",
+    borderTopColor:"#000",
+    borderTopWidth:1,
 
+    marginBottom:10,
+    padding:10,
+
+    height:390,
+    overflow:"scroll",
   },
 
   articleContainer: {
-    borderStyle:"solid",
-    borderColor:"#000",
-    borderWidth:1,
+    marginTop:10,
+    marginBottom:10,
+
+    padding:10,
+
+    backgroundColor:"#e8e8e8"
+  },
+
+  basketListContainer: {
+    borderTopStyle:"solid",
+    borderTopColor:"#000",
+    borderTopWidth:1,
+
+    marginBottom:10,
+    padding:10,
+
+    height:150,
+    overflow:"scroll",
+
+    backgroundColor:"#e8e8e8"
+  },
+
+  basketItem: {
+    flexDirection:"row",
+    flexWrap:"wrap",
 
     marginTop:5,
     marginBottom:5
   },
 
   articleText: {
-    fontSize: 18
+    fontSize: 19,
+    marginRight:10,
   },
 
 });

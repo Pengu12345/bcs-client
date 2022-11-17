@@ -12,17 +12,28 @@ export function BasketComponent(props : {
   const basket = props.basket
   const articles = basket.articles
 
-  function removeArticleToBasket() {
-    props.remove(id)
+  function removeArticleFromBasket(id: number) {
+    props.onRemove(id)
+  }
+
+  let list = (<Text style={styles.articleText}>Please add an item to the cart.</Text>)
+
+  if(basket.articles.length != 0) {
+    list = (
+      <FlatList data={articles} renderItem={ ({item}) =>
+        <View style={styles.basketItem}>
+          <Text style={styles.articleText}>
+            {item.article.name} ( x{item.quantity})
+          </Text>
+          <Button color={"#b27878"} title={"Remove 1"} onPress={() => removeArticleFromBasket(item.article.id)} />
+        </View>
+      }/>
+    )
   }
 
   return(
-    <View style={styles.articleContainer}>
-      <FlatList data={articles} renderItem={ ({articleInfo}) =>
-        <Text>
-          articleInfo.article.name
-        </Text>
-      }/>
+    <View style={styles.basketListContainer}>
+      {list}
     </View>
   );
 }

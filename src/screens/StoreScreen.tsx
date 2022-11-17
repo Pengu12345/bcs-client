@@ -6,12 +6,20 @@ import {ArticleComponent} from "../components/ArticleComponent";
 import {API} from "../API";
 
 import {Article, ArticleInfo, Basket} from "../types/Types";
+import {BasketComponent} from "../components/BasketComponent";
 
-export default function StoreScreen() {
+export default function StoreScreen({navigation} : any) {
 
   const [articlesLoaded, setArticlesLoaded] = useState(false)
   const [articles, setArticles] = useState<Article[]>([])
   const [basket, setBasket] = useState<Basket>({articles:[]})
+
+  const gotoCart = () => {
+    navigation.navigate('Cart',{
+      basket: basket,
+      onRemove: removeArticleFromBasket
+    })
+  }
 
   const addArticleToBasket = (id:number) => {
     let new_basket = {...basket}
@@ -33,7 +41,6 @@ export default function StoreScreen() {
     }
 
     setBasket(new_basket);
-    console.log(JSON.stringify(basket));
 
   }
 
@@ -46,12 +53,12 @@ export default function StoreScreen() {
       // Update the existing item
       if(found.quantity > 0) found.quantity -= 1;
       // Remove from basket if there's no more
-      if(found.quantity === 0) new_basket.articles.filter((item) => item !== found)
+      if(found.quantity === 0) new_basket.articles = new_basket.articles.filter((item) => item !== found)
     }
 
     setBasket(new_basket);
-    console.log(JSON.stringify(basket));
 
+    return basket
   }
 
   const findArticleById = (id : number) => {
@@ -72,18 +79,22 @@ export default function StoreScreen() {
 
   if(articlesLoaded) {
     allArticles = (
-      <FlatList style={styles.articleListContainer} data={articles} renderItem={({item}) =>
-        <ArticleComponent article={item} onAdd={addArticleToBasket}/>
-      }/>
+      <View style={styles.articleListContainer}>
+        <FlatList data={articles} renderItem={({item}) =>
+          <ArticleComponent article={item} onAdd={addArticleToBasket}/>
+        }/>
+      </View>
     )
   }
 
+  let basketSize = 0
+  basket.articles.forEach((item) => basketSize += item.quantity)
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Store</Text>
       {allArticles}
-
-      <Button title={"Proceed to checkout"} onPress={()=>{}}/>
-    </SafeAreaView>
+      <Button title={"Check cart items (" + basketSize + ")"} onPress={gotoCart}/>
+    </View>
   );
 }

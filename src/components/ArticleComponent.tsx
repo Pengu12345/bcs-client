@@ -23,7 +23,7 @@ export function ArticleComponent(props : {
     <View style={styles.articleContainer}>
       <Text style={styles.articleText}> {name} -- {price}€</Text>
 
-      <Button title={"Add to basket"} onPress={addArticleToBasket} />
+      <Button color={"#78a4b2"} title={"Add to cart"} onPress={addArticleToBasket} />
     </View>
   );
 }

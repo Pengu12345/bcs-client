@@ -1,10 +1,11 @@
 import { StripeProvider } from '@stripe/stripe-react-native';
-import CheckoutScreen from './CheckoutScreen';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 
 export default function App() {
   return (
+
     <StripeProvider
-      publishableKey="pk_test_51LxoKKHqMywXhbC79U1iNbpdJObZir61ouukdBjw1g5OVwnIdcLQmJju8uq5UDxDB8edvSCIT2sxVAVmzDkJ626I00m7XU3GGc"
+      publishableKey="pk_test_51M52efBQoXdcBLGssCI6Sp2Uhfl6FeYa4bRD9aIHU54ZsVyg966Eh66gJW1wQPDKOVkUhiI3p8apQFhgIkclVgOR00jHE9iwaP"
       merchantIdentifier="merchant.com.example"
     >
       <CheckoutScreen />

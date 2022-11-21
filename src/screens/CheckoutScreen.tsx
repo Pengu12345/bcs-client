@@ -4,16 +4,33 @@ import {Alert, Text, Button, SafeAreaView} from "react-native";
 
 import {styles} from "../style/Stylesheet";
 import {API} from "../API";
+import {ArticleInfo, Basket} from "../types/Types";
 
-export default function CheckoutScreen() {
+export default function CheckoutScreen({route, navigation} : any) {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const [loading, setLoading] = useState(false);
 
     const [paymentIntentId, setPaymentIntentId] = useState<string>("");
 
-    const amount = 1099;
-    const userId = 1;
-    const itemsId = [1];
+    const userId = 1; //We only make payments as the user 1 for now.
+
+    // Initialize the payment info
+    let amount = 0;
+    let itemsId : number[] = [];
+
+    const params = route.params
+    const basket : Basket = params.basket
+
+    for(const obj of basket.articles) {
+        // Add to the final price
+        amount += obj.article.price * obj.quantity
+
+        // Add the id to the array
+        for(let i = 0; i<obj.quantity; i++) itemsId.push(obj.article.id)
+    }
+
+    console.log("Total amount: ", amount)
+    console.log("Cart ids: ", itemsId)
 
     const fetchPaymentSheetParams = async () => {
         const response = await fetch(`${API.getAddress()}/payments/`, {

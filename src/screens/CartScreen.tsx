@@ -10,10 +10,18 @@ import {BasketComponent} from "../components/BasketComponent";
 
 export default function CartScreen({route, navigation} : any) {
 
-  let {basket, onRemove} = route.params
+  let {basket_data, onRemove} = route.params
+
+  const [basket,setBasket] = useState(basket_data)
 
   const removeArticle = (id : number) => {
-    basket = onRemove(id)
+    setBasket(onRemove(id))
+  }
+
+  const gotoCheckoutScreen = () => {
+    navigation.navigate('Checkout', {
+      basket:basket
+    })
   }
 
   return (
@@ -21,7 +29,7 @@ export default function CartScreen({route, navigation} : any) {
       <Text style={styles.title}>Cart</Text>
       <BasketComponent basket={basket} onRemove={removeArticle} />
 
-      <Button color="#B29078FF" title={"Proceed to checkout"} onPress={()=>{}} disabled={basket.articles.length <= 0}/>
+      <Button color="#B29078FF" title={"Proceed to checkout"} onPress={gotoCheckoutScreen} disabled={basket.articles.length <= 0}/>
 
     </View>
   );

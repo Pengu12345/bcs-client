@@ -23,7 +23,7 @@ const stylesheet = StyleSheet.create({
     marginBottom:10,
     padding:10,
 
-    height:390,
+    height:500,
     overflow:"scroll",
   },
 

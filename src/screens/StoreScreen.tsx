@@ -1,6 +1,6 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import React, { useEffect, useState } from "react";
-import {Alert, Text, Button, SafeAreaView, View, FlatList} from "react-native";
+import {Alert, Text, Button, SafeAreaView, View, FlatList, ToastAndroid} from "react-native";
 import {styles} from "../style/Stylesheet";
 import {ArticleComponent} from "../components/ArticleComponent";
 import {API} from "../API";
@@ -16,8 +16,14 @@ export default function StoreScreen({navigation} : any) {
 
   const gotoCart = () => {
     navigation.navigate('Cart',{
-      basket: basket,
+      basket_data: basket,
       onRemove: removeArticleFromBasket
+    })
+  }
+
+  const gotoScan = () => {
+    navigation.navigate('Scan', {
+      onScan: addArticleToBasket
     })
   }
 
@@ -30,10 +36,9 @@ export default function StoreScreen({navigation} : any) {
       // Add the new item to the basket
       const toAdd = findArticleById(id);
       if(toAdd !== undefined) {
-        articles.push({
-          article: toAdd,
-          quantity: 1
-        });
+        const item = {article: toAdd, quantity: 1}
+        articles.push(item);
+        found = item
       }
     } else {
       // Update the existing item
@@ -42,9 +47,16 @@ export default function StoreScreen({navigation} : any) {
 
     setBasket(new_basket);
 
+    if(found != undefined) {
+      Alert.alert('Information', "The item '"+ found.article.name +"' has been added to your cart.");
+    } else {
+      Alert.alert('Error', "An error has occured and the item couldn't be added.");
+    }
+
   }
 
   const removeArticleFromBasket = (id:number) => {
+
     let new_basket = {...basket}
     let articles = new_basket.articles
     let found = articles.find((item) => item.article.id == id)
@@ -53,12 +65,12 @@ export default function StoreScreen({navigation} : any) {
       // Update the existing item
       if(found.quantity > 0) found.quantity -= 1;
       // Remove from basket if there's no more
-      if(found.quantity === 0) new_basket.articles = new_basket.articles.filter((item) => item !== found)
     }
 
+    new_basket.articles = new_basket.articles.filter((item) => item.quantity > 0)
     setBasket(new_basket);
 
-    return basket
+    return new_basket
   }
 
   const findArticleById = (id : number) => {
@@ -95,6 +107,7 @@ export default function StoreScreen({navigation} : any) {
       <Text style={styles.title}>Store</Text>
       {allArticles}
       <Button title={"Check cart items (" + basketSize + ")"} onPress={gotoCart}/>
+      <Button title={"Scan item"} onPress={gotoScan}/>
     </View>
   );
 }

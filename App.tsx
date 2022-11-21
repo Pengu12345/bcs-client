@@ -1,10 +1,11 @@
 import { StripeProvider } from '@stripe/stripe-react-native';
-import CheckoutScreen from './src/screens/CheckoutScreen';
 
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import StoreScreen from "./src/screens/StoreScreen";
 import CartScreen from "./src/screens/CartScreen";
+import CheckoutScreen from './src/screens/CheckoutScreen';
+import BarcodeScreen from "./src/screens/BarcodeScreen";
 
 export default function App() {
 
@@ -23,6 +24,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name={"Store"} component={StoreScreen}/>
         <Stack.Screen name={"Cart"} component={CartScreen}/>
+        <Stack.Screen name={"Scan"} component={BarcodeScreen}/>
         <Stack.Screen name={"Checkout"} component={CheckoutScreen} />
       </Stack.Navigator>
     </NavigationContainer>

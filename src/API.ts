@@ -1,4 +1,4 @@
-const address = "http://172.16.20.182:8000"
+const address = "http://192.168.42.236:8000"
 
 type ArticleType = {
   id : string
